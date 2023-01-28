@@ -48,6 +48,7 @@ export type ValidateAndScroll<VS> = (option: ValidateOption<VS>) => Promise<Vali
 export type HandleValidate<VS> = (option: ValidateOption<VS>) => Promise<ValidateResult>
 
 export interface UseValues<VS extends FormValues> {
+  initialValues: VS
   values: VS
   setValues: SetData<VS>
   resetValues: () => void
@@ -63,6 +64,7 @@ export interface UseErrors {
 }
 
 export interface UseValidate<VS extends FormValues> {
+  getRules: (fields?: string | string[]) => FormRules
   setRules: SetData<FormRules>
   removeRules: (fields: string | string[]) => void
   setValidateValues: (field: string, value: any) => void

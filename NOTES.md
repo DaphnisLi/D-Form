@@ -25,6 +25,8 @@
 
 注: 只是组件是否会订阅更新的区别, 状态的值都会更新
 
+7、BUG!!! 似乎发现一个 recoil 的 bug, 当 dangerouslyAllowMutability 为 true, set 时直接修改原对象属性值, 不同 RecoilRoot 的 state 会共享值
+
 
 方案
 1、在 Field 组件内部进行字段级别的更新, 只在 set 本字段的时候才会更新本 Field 组件, 用路径进行更新的阻断

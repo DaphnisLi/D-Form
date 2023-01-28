@@ -2,13 +2,17 @@
 group:
   path: /basic
   title: 基础
-  order: 1
+  order: 2
 title: 快速上手
+order: 1
 ---
 
-## 简单示例
 
-<code src="./Basic.tsx"></code>
+# 快速上手
+
+### 简单示例
+
+<code src="./demo/start/Basic.tsx"></code>
 
 ### 创建表单
 
@@ -46,24 +50,20 @@ const formStore = createForm<FormState>({
 })
 ```
 
-### 表单状态
+### 表单数据
 
-上面的例子用到了一个新的 API `useValues`，它是一个 React Hook。你可以通过它获取到表单的状态：
-
+##### 1、获取表单数据
 ```tsx | pure
 // ...
 function Component() {
   const { values } = useValues()
 
-  console.log(values) // 表单状态
-
-  // return ...
+  console.log(values) // { songTitle: '告白气球' }
 }
 ```
 
-同时，在一些场景下，我们可能需要直接去设置表单状态，你可以通过 `useValues` 提供的 `setValues` 去设置表单状态。
-
-你不需要提供完整的 `values`，它就像 Class Component 的 `this.setState` 一样，会合并状态：
+##### 2、修改表单数据
+setValues 可以自动聚合其他属性, 和 class 的 this.setState 类似
 
 ```tsx | pure
 // ...
@@ -81,8 +81,7 @@ function Component() {
 ```
 
 ### 表单校验
-
-表单校验是一个表单最最重要的功能，你可以指定 `Field` 上的 `required` 来设置该表单域必填，或者通过 `Field` 的 `rule` 字段来自定义校验逻辑：
+required 设置字段为必填
 
 ```tsx | pure
 // ...初始化
@@ -91,10 +90,10 @@ const { Field, withForm } = formStore
 function Component() {
   return (
     <>
-      <Field field="name" label="姓名" required>
+      <Field field="singer" label="歌手" required>
         <Input />
       </Field>
-      <Field field="name" label="姓名" rule={{ required: true }}>
+      <Field field="songTitle" label="歌名" rule={{ required: true }}>
         <Input />
       </Field>
     </>
@@ -104,7 +103,7 @@ function Component() {
 export default withForm(Component)
 ```
 
-在提交表单时，可以调用 `useValidate` hook 提供的 `validate` 函数，触发表单的校验：
+在提交表单时, 可以调用 `useValidate` hook 提供的 `validate` 函数，触发表单的校验：
 
 ```tsx | pure
 // ...初始化
@@ -119,16 +118,14 @@ function Component() {
     if (!validateRes.isPass) {
       return
     }
-
-    // pass
   }, [])
 
   return (
     <>
-      <Field field="name" label="姓名" required>
+      <Field field="singer" label="歌手" required>
         <Input />
       </Field>
-      <Field field="name" label="姓名" rule={{ required: true }}>
+      <Field field="songTitle" label="歌名" rule={{ required: true }}>
         <Input />
       </Field>
       <div>

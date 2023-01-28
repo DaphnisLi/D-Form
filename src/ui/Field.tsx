@@ -99,7 +99,7 @@ export const Field = <F, FI>(props: FieldProps<F, FI>) => {
   }, [value, onChange, pureChildren, children, valuePropKey, trigger])
 
   // 不需要将某些 props 传给 FormItem 组件, 否则会透传到原始 Form.Item 上引起报错 https://fb.me/react-attribute-behavior
-  const excludePropsKeys = ['addItem', 'pureChildren', 'rule', 'isDelRulesWhenDestroy', 'wrapper']
+  const excludePropsKeys = ['addItem', 'pureChildren', 'rule', 'isDelRulesWhenDestroy', 'wrapper', 'valuePropKey']
   const formItemProps = _.omit(props, excludePropsKeys)
 
   return (

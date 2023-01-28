@@ -2,14 +2,14 @@
 nav:
   title: 指南
   path: /guide
-  order: 0
+  order: 1
 title: 介绍
-order: 0
+order: 1
 ---
 
 ## 安装
 ``` bash
-npm install
+npm i @daphnis/d-form -S
 ```
 
 ## 特性

@@ -1,23 +1,23 @@
 import { useCallback } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useRecoilCallback } from 'recoil'
 import { UseValues, FormValues } from '../types'
 import { valuesState, initialValuesState } from '../states'
 import { useFromState, useSetFromState } from './useRecoilState'
 
-export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'values'> => {
-  const setValue = useSetFromState(valuesState)
-  const [initialValue, setInitialValue] = useFromState(initialValuesState)
+export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'values' | 'initialValues'> => {
+  const setOriginValues = useSetFromState(valuesState)
+  const [originInitialValues, setOriginInitialValues] = useFromState(initialValuesState)
 
   const setValues = useCallback((data, value) => {
-    setValue(data, value)
+    setOriginValues(data, value)
   }, [])
 
-  const resetValues = useCallback(() => {
-    setValue(initialValue)
-  }, [initialValue])
+  const resetValues = useRecoilCallback(({ set }) => async () => {
+    set(valuesState, originInitialValues)
+  }, [originInitialValues])
 
   const removeValues = useCallback((fields) => {
-    setValue(draft => {
+    setOriginValues(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {
           delete draft[item]
@@ -29,7 +29,7 @@ export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'valu
   }, [])
 
   const setInitialValues = useCallback((data, value) => {
-    setInitialValue(data, value)
+    setOriginInitialValues(data, value)
   }, [])
 
   return {
@@ -42,7 +42,10 @@ export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'valu
 
 export const useValues = <VS extends FormValues>(): UseValues<VS> => {
   const values = useRecoilValue(valuesState) as VS
+  const initialValues = useRecoilValue(initialValuesState) as VS
+
   return {
+    initialValues,
     values,
     ...useSetValues(),
   }

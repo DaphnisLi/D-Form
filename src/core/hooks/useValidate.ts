@@ -3,8 +3,6 @@ import { useRecoilCallback } from 'recoil'
 import {
   UseValidate,
   FormValues,
-  FormRules,
-  SetData,
   Validate,
   ValidateAndScroll,
   FormErrors,
@@ -14,22 +12,26 @@ import {
 import Validator from 'async-validator'
 import { useValues } from './useValues'
 import { rulesState, validateValuesState, formIdState, errorsState } from '../states'
-import { useSetFromState } from './useRecoilState'
+import { useFromState, useSetFromState } from './useRecoilState'
 import { useErrors } from './useErrors'
 import _ from 'lodash'
 
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
-  const setRule = useSetFromState(rulesState, false)
-  const setValidateValue = useSetFromState(validateValuesState, false)
+  const [originRules, setOriginRule] = useFromState(rulesState, false)
+  const setOriginValidateValue = useSetFromState(validateValuesState, false)
   const { setErrors, resetErrors } = useErrors()
   const { values } = useValues()
 
-  const setRules: SetData<FormRules> = useCallback((data, value) => {
-    setRule(data, value)
-  }, [setRule])
+  const getRules = useCallback((fields) => {
+    return fields ? _.pick(originRules, fields) : originRules
+  }, [originRules])
+
+  const setRules = useCallback((data, value) => {
+    setOriginRule(data, value)
+  }, [setOriginRule])
 
   const removeRules = useCallback(fields => {
-    setRule((draft) => {
+    setOriginRule((draft) => {
       if (Array.isArray(fields)) {
         fields.forEach(field => {
           delete draft[field]
@@ -38,11 +40,11 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
         delete draft[fields]
       }
     })
-  }, [setRule])
+  }, [setOriginRule])
 
   const setValidateValues = useCallback((data, value) => {
-    setValidateValue(data, value)
-  }, [setValidateValue])
+    setOriginValidateValue(data, value)
+  }, [setOriginValidateValue])
 
   const scrollErrors = useRecoilCallback(({ snapshot }) => async (errs: FormErrors) => {
     const formId = await snapshot.getPromise(formIdState)
@@ -137,6 +139,7 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
   }, [handleValidate])
 
   return {
+    getRules,
     setRules,
     removeRules,
     setValidateValues,

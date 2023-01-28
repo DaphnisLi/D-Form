@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createForm } from '@daphnis/d-form'
 import { Button, Input, Select, message, Form } from 'antd'
 
@@ -14,9 +14,6 @@ const Basic = () => {
   const { values } = useValues()
   const { validate } = useValidate()
 
-  useEffect(() => {
-    console.log(values)
-  }, [values])
   const handleSubmit = async () => {
     const validateRes = await validate()
 
