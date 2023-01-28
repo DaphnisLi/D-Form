@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
-import typescript from '@rollup/plugin-typescript';
+import typescript from '@rollup/plugin-typescript'
 import postcss from 'rollup-plugin-postcss'
 
 const commonBundleConfigs = {
@@ -10,7 +10,8 @@ const commonBundleConfigs = {
   sourcemap: true,
   globals: {
     react: 'React',
-    'react-dom': 'ReactDOM',
+    lodash: '_',
+    antd: 'antd',
   },
 }
 
@@ -46,6 +47,7 @@ export default {
 
   external: [
     'react',
-    'react-dom',
+    'lodash',
+    'antd',
   ],
 }

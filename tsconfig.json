@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmitOnError": true,
     "target": "ES6",
     "module": "esnext",
     "moduleResolution": "node",
@@ -10,11 +11,14 @@
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
     "rootDir": "./",
     "baseUrl": "./src",
     "paths": {
-      "newProject": ["."],
-    }
+      "@daphnis/d-form": ["."],
+    },
+    "noImplicitAny": false,
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "./typings.d.ts"],
 }

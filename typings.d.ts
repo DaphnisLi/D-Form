@@ -1,8 +1,5 @@
-declare module '*.css';
-declare module '*.less';
+import { LoDashStatic } from 'lodash'
 
-declare namespace jest {
-  interface Matchers<R> {
-    toMatchRenderedSnapshot(): R
-  }
+declare global {
+  const _: LoDashStatic
 }

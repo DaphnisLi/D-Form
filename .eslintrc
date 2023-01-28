@@ -9,7 +9,12 @@
       "version": "detect"
     }
   },
-  "extends": ["standard", "standard-react"],
+  "extends": [
+    "standard",
+    "standard-react",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "plugins": ["@typescript-eslint", "react-hooks"],
   "env": {
     "browser": true,
@@ -17,6 +22,8 @@
   },
   "ignorePatterns": ["docs/**/*"],
   "rules": {
+    "n/no-callback-literal": "off",
+    "react/display-name": "off",
     "no-console": "warn",
     "semi": "off",
     "no-use-before-define": "off",

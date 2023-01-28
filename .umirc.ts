@@ -8,6 +8,9 @@ export default defineConfig({
     'https://s2.loli.net/2022/08/14/51A6SiswhVeGnRL.png',
   logo: 'https://s2.loli.net/2022/08/14/51A6SiswhVeGnRL.png',
   outputPath: 'docs',
+  resolve: {
+    includes: ['./src/docs'],
+  },
   mode: 'site',
   navs: [
     null,
