@@ -3,11 +3,10 @@ nav:
   title: CORE
   path: /core
   order: 2
-
 title: 介绍
 order: 0
-
 ---
+
 核心层
 
 core 是一个 UI 无关的核心包, 用于管理表单状态

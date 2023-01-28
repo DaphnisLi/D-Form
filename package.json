@@ -78,9 +78,12 @@
   },
   "peerDependencies": {
     "antd": ">=5",
-    "react": ">=16",
+    "react": ">=16.9.0",
     "lodash": ">=4"
   },
   "typings": "dist/index.d.ts",
-  "module": "dist/index.js"
+  "module": "dist/index.js",
+  "engines": {
+    "node": "14.17.3"
+  }
 }
