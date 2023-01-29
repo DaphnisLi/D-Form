@@ -2,11 +2,11 @@ import { useCallback } from 'react'
 import { useRecoilValue, useRecoilCallback } from 'recoil'
 import { UseValues, FormValues } from '../types'
 import { valuesState, initialValuesState } from '../states'
-import { useFromState, useSetFromState } from './useRecoilState'
+import { useFromState, useSetFromStatePath } from './useRecoilState'
 
 export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'values' | 'initialValues'> => {
-  const setOriginValues = useSetFromState(valuesState)
-  const [originInitialValues, setOriginInitialValues] = useFromState(initialValuesState)
+  const setOriginValues = useSetFromStatePath(valuesState)
+  const [originInitialValues, , setOriginInitialValues] = useFromState(initialValuesState)
 
   const setValues = useCallback((data, value) => {
     setOriginValues(data, value)
@@ -20,10 +20,10 @@ export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'valu
     setOriginValues(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {
-          delete draft[item]
+          _.set(draft, item, undefined)
         })
       } else {
-        delete draft[fields]
+        _.set(draft, fields, undefined)
       }
     })
   }, [])

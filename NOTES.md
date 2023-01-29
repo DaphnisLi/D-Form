@@ -2,7 +2,7 @@
 
 1、为什么要用 formId: 如果一个页面有两个表单, 如果不加以区分的话, 某些功能报错, 比如 validateAndScroll
 
-2、errors、rules、validator 必须是 { [key: string]: string }, 不能用 D 做 key, 因为 D 是用户的数据结构, 但这里的 key 用的是 field 的路径
+2、只有 values 支持 path 存储, errors、rules、validatorValues 必须是 { [key: string]: string }, 不能用 VS 做 key, 因为 VS 是用户的数据结构, 但这里的 key 用的是 field 的路径
 
 3、就算 useEffect 依赖项 (非状态变量) 改变并且组件更新也不会执行 useEffect, 而且非状态变量不能做到状态持久化第一个方案之所以非状态变量可以做到状态持久化是因为保存到了 context 中, 也是保存在状态里了。
 例子如下

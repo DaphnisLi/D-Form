@@ -15,6 +15,38 @@ export const useSetFromState = <D extends object>(state: RecoilState<D>, isSubsc
     if (typeof data === 'string') {
       setValue(currVal => {
         const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
+        _.set(draft, data, value)
+        return draft
+      })
+    } else if (typeof data === 'object') {
+      setValue(currVal => {
+        const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
+        for (const key in data) {
+          _.set(draft, key, data[key])
+        }
+        return draft
+      })
+    } else if (typeof data === 'function') {
+      setValue(currVal => {
+        const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
+        data(draft)
+        return draft
+      })
+    }
+  }
+  return set as SetData<D>
+}
+
+/**
+ * 以 path 的方式设置 value
+ */
+export const useSetFromStatePath = <D extends object>(state: RecoilState<D>, isSubscribeUpdate: boolean = true) => {
+  const setValue = useSetRecoilState(state)
+
+  const set = (data, value) => {
+    if (typeof data === 'string') {
+      setValue(currVal => {
+        const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
         draft[data] = value
         return draft
       })
@@ -44,5 +76,6 @@ export const useSetFromState = <D extends object>(state: RecoilState<D>, isSubsc
 export const useFromState = <D extends object>(state: RecoilState<D>, isSubscribeUpdate: boolean = true) => {
   const value = useRecoilValue(state)
   const setValue = useSetFromState(state, isSubscribeUpdate)
-  return [value, setValue] as [D, SetData<D>]
+  const setValuePath = useSetFromStatePath(state, isSubscribeUpdate)
+  return [value, setValue, setValuePath] as [D, SetData<D>, SetData<D>]
 }

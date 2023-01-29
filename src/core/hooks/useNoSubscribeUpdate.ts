@@ -3,24 +3,26 @@ import { useRecoilCallback } from 'recoil'
 import { UseValues, FormValues } from '../types'
 import { valuesState, initialValuesState } from '../states'
 import { useFromState } from './useRecoilState'
+import _ from 'lodash'
 
 /**
  * 此 Hook 不会订阅组件更新, 用法同 useValues
  */
 export const useNoSubscribeUpdate = <VS extends FormValues>(): UseValues<VS> => {
-  const [originValues, setOriginValues] = useFromState(valuesState, false)
-  const [originInitialValues, setOriginInitialValues] = useFromState(initialValuesState, false)
+  const [originValues, , setOriginValues] = useFromState(valuesState, false)
+  const [originInitialValues, , setOriginInitialValues] = useFromState(initialValuesState, false)
 
   const setValues = useCallback((data, value) => {
     setOriginValues(data, value)
   }, [])
 
   const resetValues = useRecoilCallback(({ set }) => async () => {
-    set(valuesState, (draft) => {
+    set(valuesState, draft => {
+      const initialValues = _.cloneDeep(originInitialValues)
       for (const key in draft) {
         delete draft[key]
-        if (originInitialValues[key]) {
-          draft[key] = originInitialValues[key]
+        if (initialValues[key]) {
+          draft[key] = initialValues[key]
         }
       }
       return draft
@@ -31,10 +33,10 @@ export const useNoSubscribeUpdate = <VS extends FormValues>(): UseValues<VS> => 
     setOriginValues(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {
-          delete draft[item]
+          _.set(draft, item, undefined)
         })
       } else {
-        delete draft[fields]
+        _.set(draft, fields, undefined)
       }
     })
   }, [])

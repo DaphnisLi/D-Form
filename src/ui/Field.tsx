@@ -37,11 +37,6 @@ export const Field = <F, FI>(props: FieldProps<F, FI>) => {
     })
   }, [initialValue, field])
 
-  // useEffect(() => {
-  //   setValidateValues(field, value)
-  // }, [value, field])
-
-
   useEffect(() => {
     if (!rule && !required) return
 
