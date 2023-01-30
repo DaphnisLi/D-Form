@@ -4,7 +4,7 @@ import { Button, Form, Input, message, Space } from 'antd'
 
 const formItemLayout = {
   labelCol: {
-    span: 2,
+    span: 3,
   },
   wrapperCol: {
     span: 15,
@@ -18,10 +18,10 @@ const { useValidate, useValues, Field, withForm } = formStore
 
 const Component = () => {
   const { values, resetValues } = useValues()
-  const { validate } = useValidate()
+  const { validateAndScroll } = useValidate()
 
   const handleSubmit = async () => {
-    const validateRes = await validate()
+    const validateRes = await validateAndScroll()
     if (!validateRes.isPass) {
       return message.error('表单值校验错误')
     }
@@ -37,18 +37,48 @@ const Component = () => {
   return (
     <Form {...formItemLayout}>
       <Field
+        field="singerZh"
+        label="歌手中文名"
+        required
+        rule={{
+          validator: (rule, value, cb) => {
+            if (value === '周杰伦') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
+        }}
+      >
+        <Input />
+      </Field>
+      <Field
+        field="singerEn"
+        label="歌手英文名"
+        rule={{
+          validator: (rule, value, cb) => {
+            if (value === 'Jay') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
+        }}
+        required
+      >
+        <Input />
+      </Field>
+      <Field
         field="songTitle"
         label="歌名"
         rule={{
-          asyncValidator: async (rule, value, cb) => new Promise(() => {
-            setTimeout(() => {
-              if (effectiveName.includes(value)) {
-                cb('歌名不能重复')
-              } else {
-                cb()
-              }
-            }, 1000)
-          }),
+          validator: (rule, value, cb) => {
+            if (effectiveName.includes(value)) {
+              cb('歌名不能重复')
+            } else {
+              cb()
+            }
+          },
         }}
         required
       >
@@ -56,7 +86,7 @@ const Component = () => {
       </Field>
 
       <Space size="large" style={{ marginTop: 20 }}>
-        <Button type="primary" onClick={handleSubmit}>异步校验</Button>
+        <Button type="primary" onClick={handleSubmit}>校验</Button>
         <Button onClick={handleReset}>重置表单值和错误</Button>
       </Space>
     </Form>

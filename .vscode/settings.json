@@ -10,5 +10,6 @@
     "parens",
     "linebreak",
     "singleline",
+    "Cascader",
   ],
 }

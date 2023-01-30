@@ -15,14 +15,14 @@ export const useSetFromState = <D extends object>(state: RecoilState<D>, isSubsc
     if (typeof data === 'string') {
       setValue(currVal => {
         const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
-        _.set(draft, data, value)
+        draft[data] = value
         return draft
       })
     } else if (typeof data === 'object') {
       setValue(currVal => {
         const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
         for (const key in data) {
-          _.set(draft, key, data[key])
+          draft[key] = data[key]
         }
         return draft
       })
@@ -47,14 +47,14 @@ export const useSetFromStatePath = <D extends object>(state: RecoilState<D>, isS
     if (typeof data === 'string') {
       setValue(currVal => {
         const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
-        draft[data] = value
+        _.set(draft, data, value)
         return draft
       })
     } else if (typeof data === 'object') {
       setValue(currVal => {
         const draft = isSubscribeUpdate ? _.cloneDeep(currVal) : currVal
         for (const key in data) {
-          draft[key] = data[key]
+          _.set(draft, key, data[key])
         }
         return draft
       })

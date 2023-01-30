@@ -24,7 +24,6 @@
   "rules": {
     "n/no-callback-literal": "off",
     "react/display-name": "off",
-    "no-console": "warn",
     "semi": "off",
     "no-use-before-define": "off",
     "no-multiple-empty-lines": "off",

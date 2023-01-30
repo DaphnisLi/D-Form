@@ -13,6 +13,9 @@ order: 4
 const { useErrors } = createForm()
 
 const { errors, setErrors, removeErrors, resetErrors } = useErrors()
+
+const { setErrors, removeErrors, resetErrors } = useSetErrors()
+
 ```
 
 ### 基础错误管理
@@ -45,7 +48,7 @@ const { setErrors } = useErrors()
 setErrors('field1', 'error message of field1')
 ```
 
-2. 设置多个 Field 的错误信息（注意：这里的赋值和 setState 的赋值不同，不是替换原值，而是合并进原值）
+2. 设置多个 Field 的错误信息（_注意：这里的赋值和 setState 的赋值不同，不是替换原值，而是合并进原值_）
 
 ```typescript
 const { setErrors } = useErrors()

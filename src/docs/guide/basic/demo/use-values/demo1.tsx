@@ -1,12 +1,22 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Input, InputNumber, Select, Cascader, Rate, Radio, Checkbox, Switch, DatePicker, message, Form } from 'antd'
+import { Button, Input, InputNumber, Select, Cascader, Rate, Radio, Checkbox, Switch, DatePicker, message, Form, Space } from 'antd'
+
+const formItemLayout = {
+  labelCol: {
+    span: 3,
+  },
+  wrapperCol: {
+    span: 15,
+  },
+  labelAlign: 'left' as const,
+}
 
 export const formStore = createForm()
 
 const { useValues, Field, withForm } = formStore
 
-function Component () {
+const Component = () => {
   const { values, resetValues } = useValues()
 
   const handleSubmit = () => {
@@ -20,10 +30,7 @@ function Component () {
   return (
     <Form
       layout="horizontal"
-      labelAlign="left"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{ width: 400 }}
+      {...formItemLayout}
     >
 
       <Field field="input" label="Input">
@@ -48,15 +55,15 @@ function Component () {
       <Field field="cascader" label="Cascader">
         <Cascader
           options={[{
-            value: 'zhejiang',
+            value: 'zheJiang',
             label: 'Zhejiang',
             children: [
               {
-                value: 'hangzhou',
+                value: 'hangZhou',
                 label: 'Hangzhou',
                 children: [
                   {
-                    value: 'xihu',
+                    value: 'xiHu',
                     label: 'West Lake',
                   },
                 ],
@@ -83,7 +90,7 @@ function Component () {
         </Radio.Group>
       </Field>
 
-      <Field field="datepicker" label="DatePicker">
+      <Field field="datePicker" label="DatePicker">
         <DatePicker />
       </Field>
 
@@ -91,10 +98,10 @@ function Component () {
         <Rate />
       </Field>
 
-      <div>
-        <Button style={{ marginRight: 20 }} type="primary" onClick={handleSubmit}>提交</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleReset}>重置</Button>
-      </div>
+      <Space size="large">
+        <Button type="primary" onClick={handleSubmit}>提交</Button>
+        <Button onClick={handleReset}>重置</Button>
+      </Space>
     </Form>
   )
 }

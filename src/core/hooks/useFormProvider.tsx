@@ -14,11 +14,8 @@ export const useFormProvider = <VS extends FormValues>(defaultValues?: VS) => {
       set(errorsState, {})
       set(rulesState, {})
       set(validateValuesState, {})
-
-      if (defaultValues) {
-        set(initialValuesState, defaultValues)
-        set(valuesState, defaultValues)
-      }
+      set(initialValuesState, defaultValues || {})
+      set(valuesState, defaultValues || {})
     }
     return <RecoilRoot initializeState={initializeState}>{props.children}</RecoilRoot>
   }

@@ -1,12 +1,22 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Form, Input, InputNumber, message } from 'antd'
+import { Button, Form, Input, message, Space } from 'antd'
+
+const formItemLayout = {
+  labelCol: {
+    span: 3,
+  },
+  wrapperCol: {
+    span: 15,
+  },
+  labelAlign: 'left' as const,
+}
 
 export const formStore = createForm()
 
 const { useValues, useValidate, useErrors, Field, withForm } = formStore
 
-function Component () {
+const Component = () => {
   const { values } = useValues()
   const { validate } = useValidate()
   const { errors, resetErrors } = useErrors()
@@ -28,58 +38,63 @@ function Component () {
   }
 
   return (
-    <Form style={{ width: 500 }}>
-
+    <Form {...formItemLayout}>
       <Field
-        field="nameZh"
-        label="产品中文名"
-        rule={[
-          {
-            required: true,
-            message: '产品中文名称不能为空',
-          },
-          {
-            min: 2,
-            message: '产品中文名称最少2个字符',
-          },
-          {
-            max: 16,
-            message: '产品中文名称最多不能超过16个字符',
-          },
-        ]}
-      >
-        <Input placeholder="请输入产品中文名称" />
-      </Field>
-
-      <Field
-        field="url"
-        label="产品链接"
-        rule={[{
-          pattern: /^https?:\/\//,
-          message: '产品链接必须以http://或https://开头',
-        }]}
+        field="singerZh"
+        label="歌手中文名"
         required
+        rule={{
+          validator: (rule, value, cb) => {
+            if (value === '周杰伦') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
+        }}
       >
-        <Input placeholder="请输入产品链接" />
+        <Input />
       </Field>
 
       <Field
-        field="count"
-        label="数量"
+        field="singerEn"
+        label="歌手英文名"
         rule={{
-          validator: (rule, value) => value > 0 && value <= 100,
-          message: '数量必须为正数且最大不能超过100',
+          validator: (rule, value, cb) => {
+            if (value === 'Jay') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
         }}
         required
       >
-        <InputNumber />
+        <Input />
       </Field>
 
-      <div style={{ paddingTop: 20 }}>
-        <Button style={{ marginRight: 20 }} type="primary" onClick={handleSubmit}>校验并提交</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleReset}>重置表单错误</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleGetErrors}>展示校验错误</Button>
-      </div>
+      <Field
+        field="songTitle"
+        label="歌名"
+        rule={{
+          validator: (rule, value, cb) => {
+            if (value === '安静') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
+        }}
+        required
+      >
+        <Input />
+      </Field>
+
+      <Space size="large" style={{ marginTop: 20 }}>
+        <Button type="primary" onClick={handleSubmit}>校验并提交</Button>
+        <Button onClick={handleReset}>重置表单错误</Button>
+        <Button onClick={handleGetErrors}>展示校验错误</Button>
+      </Space>
     </Form>
   )
 }

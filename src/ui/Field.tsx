@@ -1,10 +1,10 @@
 import React, { Children, cloneElement, useCallback, useEffect, useMemo } from 'react'
-import { useValues, useErrors, useValidate, useFormMeta } from '../core'
+import { useValues, useErrors, useValidate, useFormMeta, FormValues } from '../core'
 import { isObject } from './libs'
 import { FieldProps } from './types'
 import _ from 'lodash'
 
-export const Field = <F, FI>(props: FieldProps<F, FI>) => {
+export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: FieldProps<VS[K], FI, F>) => {
   const {
     initialValue, // 不受控
     field,
@@ -66,7 +66,8 @@ export const Field = <F, FI>(props: FieldProps<F, FI>) => {
   const onChange = useCallback((e) => {
     // 兼容事件
     const value = e?.target ? e.target?.value : e
-    onFieldChange?.(value) || setValues(field, value)
+    // onFieldChange?.(value) || setValues(field, value) 不可以, 因为 onFieldChange 返回值是 void
+    onFieldChange ? onFieldChange?.(value) : setValues(field, value)
     setValidateValues(field, value)
     validate({
       fields: field,
@@ -74,7 +75,7 @@ export const Field = <F, FI>(props: FieldProps<F, FI>) => {
         errors || removeErrors(field)
       },
     })
-  }, [onFieldChange, setValues])
+  }, [field, onFieldChange, setValues])
 
   // 处理子元素
   const realChildren = useMemo(() => {
@@ -102,7 +103,7 @@ export const Field = <F, FI>(props: FieldProps<F, FI>) => {
       error={showError && error}
       validateStatus={error && showError && 'error'}
       {...formItemProps}
-      className={`meta-form-field meta-form-field-${formId}-${field}${className ? ` ${className}` : ''}`}
+      className={`d-form-field d-form-field-${formId}-${field}${className ? ` ${className}` : ''}`}
       onChange={() => { }}
     >
       {realChildren}

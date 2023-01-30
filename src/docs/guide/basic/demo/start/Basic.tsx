@@ -2,6 +2,16 @@ import React from 'react'
 import { createForm } from '@daphnis/d-form'
 import { Button, Input, Select, message, Form } from 'antd'
 
+const formItemLayout = {
+  labelCol: {
+    span: 2,
+  },
+  wrapperCol: {
+    span: 15,
+  },
+  labelAlign: 'left' as const,
+}
+
 interface FormState {
   singer?: string
   songTitle?: string
@@ -36,13 +46,13 @@ const Basic = () => {
   ]
 
   return (
-    <Form style={{ width: 300 }}>
+    <Form {...formItemLayout}>
       <Field
         field="singer"
         label="歌手"
         required
         rule={{
-          validator (rule, value, callback) {
+          validator: (rule, value, callback) => {
             if (value === '周杰伦') {
               callback()
             } else {

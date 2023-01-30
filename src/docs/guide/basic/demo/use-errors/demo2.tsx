@@ -1,12 +1,22 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, message, Space } from 'antd'
+
+const formItemLayout = {
+  labelCol: {
+    span: 2,
+  },
+  wrapperCol: {
+    span: 15,
+  },
+  labelAlign: 'left' as const,
+}
 
 export const formStore = createForm()
 
 const { useValues, useErrors, Field, withForm } = formStore
 
-function Component () {
+const Component = () => {
   const { values } = useValues()
   const { errors, setErrors, removeErrors } = useErrors()
 
@@ -18,33 +28,43 @@ function Component () {
   }
 
   const handleSetError1 = () => {
-    setErrors('nameZh', '校验错误1')
+    setErrors('songTitle', '校验错误1')
   }
 
   const handleSetError2 = () => {
-    setErrors({ 'nameZh': '校验错误2' })
+    setErrors({ 'songTitle': '校验错误2' })
   }
 
   const handleRemoveError = () => {
-    removeErrors('nameZh')
+    removeErrors('songTitle')
   }
 
   return (
-    <Form style={{ width: 600 }}>
+    <Form {...formItemLayout}>
 
       <Field
-        field="nameZh"
-        label="产品中文名"
+        field="songTitle"
+        label="歌名"
+        rule={{
+          validator: (rule, value, cb) => {
+            if (value === '安静') {
+              cb()
+            } else {
+              cb('填写错误')
+            }
+          },
+        }}
+        required
       >
-        <Input placeholder="请输入产品中文名称" />
+        <Input />
       </Field>
 
-      <div style={{ paddingTop: 20 }}>
-        <Button style={{ marginRight: 20 }} type="primary" onClick={handleSubmit}>校验并提交</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleSetError1}>设置错误1</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleSetError2}>设置错误2</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleRemoveError}>移除表单错误</Button>
-      </div>
+      <Space size="large" style={{ marginTop: 20 }}>
+        <Button type="primary" onClick={handleSubmit}>校验并提交</Button>
+        <Button onClick={handleSetError1}>设置错误1</Button>
+        <Button onClick={handleSetError2}>设置错误2</Button>
+        <Button onClick={handleRemoveError}>移除表单错误</Button>
+      </Space>
     </Form>
   )
 }

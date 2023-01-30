@@ -27,6 +27,12 @@ const { getRules, setRules, removeRules, setValidateValues, validate, validateAn
 
 <code src="./demo/use-validate/demo3.tsx"></code>
 
+### 滑动到第一个错误的 Field
+
+此页面顶部有多图层 (设置了 position: fixed), 出现了遮挡
+
+<code src="./demo/use-validate/demo4.tsx"></code>
+
 ### validate
 
 ```typescript
@@ -79,8 +85,8 @@ validate({
 
 // 返回的校验结果如下：
 interface ValidateResult {
-  errors?: ErrorList,
-  fields?: FieldErrorList,
+  errors?: ValidateError
+  fields?: FieldErrorList
   isPass: boolean
 }
 
@@ -92,7 +98,16 @@ if (!validateRes.isPass) {
 }
 ```
 
-## getRules
+
+### validateAndScroll
+
+滑动到第一个错误的 Field, 用法和 validate 一样
+
+_注意: 如果页面顶部有多图层 (比如设置了 position: fixed), 则可能会出现遮挡_
+
+后期肯那个会设置提供一个设置偏移量的参数
+
+### getRules
 
 获取表单上各 Field 的校验规则的集合
 
@@ -103,7 +118,7 @@ console.log(getRules(['filed1', 'filed2']))
 console.log(getRules())
 ```
 
-## setRules
+### setRules
 
 手动设置表单的校验规则
 
@@ -113,7 +128,7 @@ const { setRules } = useValidate()
 setRules('field1', { /** 'rule of field1' */ })
 ```
 
-## removeRules
+### removeRules
 
 删除一个或多个 Field 的校验规则
 

@@ -7,7 +7,6 @@ import {
   useErrors,
   useSetErrors,
   useValidate,
-  useFormMeta,
   useNoSubscribeUpdate,
 } from '../core'
 import { BaseStore, FieldProps } from './types'
@@ -17,7 +16,7 @@ export const createFormFactory = <FI, >(FieldWrapperComponent: React.ComponentTy
   return <VS extends FormValues>(defaultValues?: VS) => {
     const FormProvider = useFormProvider(defaultValues)
 
-    const Field = <F extends keyof VS>(props: FieldProps<F, FI>) => <FieldElement {...props} wrapper={FieldWrapperComponent} />
+    const Field = <K extends keyof VS, F>(props: FieldProps<VS[K], FI, F>) => <FieldElement {...props} wrapper={FieldWrapperComponent} />
 
 
     const withForm = (Components) => {
@@ -34,7 +33,6 @@ export const createFormFactory = <FI, >(FieldWrapperComponent: React.ComponentTy
       useErrors,
       useSetErrors,
       useValidate,
-      useFormMeta,
       useNoSubscribeUpdate,
     } as BaseStore<VS, FI>
   }

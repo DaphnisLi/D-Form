@@ -1,7 +1,7 @@
 import { ValidateError, Rule } from 'async-validator'
 
 
-export type SetData<D> = <K extends keyof D> (data: K | Partial<D> | ((draft: D) => void), value?: D[K]) => void
+export type SetData<D> = <K extends keyof D> (data: K | Partial<D> | ((draft: D) => void) | string, value?: D[K]) => void
 
 export interface FormValues {
   [key: string]: any
@@ -43,7 +43,7 @@ export interface ValidateOption<VS> {
 }
 
 export type Validate<VS> = (option?: Omit<ValidateOption<VS>, 'isScroll'>) => Promise<ValidateResult>
-export type ValidateAndScroll<VS> = (option: ValidateOption<VS>) => Promise<ValidateResult>
+export type ValidateAndScroll<VS> = (option?: ValidateOption<VS>) => Promise<ValidateResult>
 
 export type HandleValidate<VS> = (option: ValidateOption<VS>) => Promise<ValidateResult>
 

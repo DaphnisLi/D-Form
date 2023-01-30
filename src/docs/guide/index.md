@@ -9,7 +9,7 @@ order: 1
 
 ## 安装
 ``` bash
-npm i @daphnis/d-form -S
+npm i @daphnis/d-form
 ```
 
 ## 特性
@@ -17,19 +17,11 @@ npm i @daphnis/d-form -S
 - 内置 [async-validator](https://github.com/yiminghe/async-validator) 进行表单校验
 - 支持复杂表单状态的嵌套管理
 - 简洁、符合直觉的 API 设计
-- 支持 Tree-Shaking
+- 支持 Tree-Shaking (CDN 引入不支持)
 
 ## 待办事项
 - [x] 数据和 UI 分离
-- [x] 组件级更新
-- [x] field 支持路径
+- [x] 支持 path 修改表单状态, 目前只支持 field、useValues、useNoSubscribeUpdate
 - [ ] 子表单
-- [ ] 表单生成器
-
-
-## 方案
-- 数据更新：基于发布订阅模式, 在 useForceUpdate 内注册 on 事件
-- 所有的工具函数都放在 Context 里
-- 在 执行 createForm 时, 将工具函数 Provider 到 value 里, 然后将 root 表单组件传入 withForm
-- 表单数据通过闭包保存
-- onChange 的时候校验
+- [ ] 表单元信息、表单生成器
+- [ ] validateAndScroll 设置偏移量

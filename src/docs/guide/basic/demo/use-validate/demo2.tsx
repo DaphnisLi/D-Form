@@ -1,12 +1,22 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, message, Space } from 'antd'
+
+const formItemLayout = {
+  labelCol: {
+    span: 2,
+  },
+  wrapperCol: {
+    span: 15,
+  },
+  labelAlign: 'left' as const,
+}
 
 export const formStore = createForm()
 
 const { useValues, useValidate, Field, withForm } = formStore
 
-function Component () {
+const Component = () => {
   const { values } = useValues()
   const { getRules, validate, setRules } = useValidate()
 
@@ -19,17 +29,17 @@ function Component () {
   }
 
   const handleSetMinRule = () => {
-    setRules('nameZh', {
-      min: 2,
+    setRules('songTitle', {
+      min: 1,
       required: true,
-      message: '产品中文名称最少2个字符',
+      message: '歌名最少1个字符',
     })
   }
 
   const handleSetMaxRule = () => {
-    setRules('nameZh', {
-      max: 16,
-      message: '产品中文名称最多不能超过16个字符',
+    setRules('songTitle', {
+      max: 8,
+      message: '歌名最多不能超过8个字符',
     })
   }
 
@@ -38,22 +48,22 @@ function Component () {
   }
 
   return (
-    <Form style={{ width: 600 }}>
+    <Form {...formItemLayout}>
 
       <Field
-        field="nameZh"
-        label="产品中文名"
+        field="songTitle"
+        label="歌名"
         required
       >
-        <Input placeholder="请输入产品中文名称" />
+        <Input />
       </Field>
 
-      <div style={{ paddingTop: 20 }}>
-        <Button style={{ marginRight: 20 }} type="primary" onClick={handleSubmit}>校验并提交</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleSetMinRule}>设置最小长度</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleSetMaxRule}>设置最大长度</Button>
-        <Button style={{ marginRight: 20 }} onClick={handleGetRules}>打印校验规则</Button>
-      </div>
+      <Space size="large" style={{ marginTop: 20 }}>
+        <Button type="primary" onClick={handleSubmit}>校验并提交</Button>
+        <Button onClick={handleSetMinRule}>设置最小长度</Button>
+        <Button onClick={handleSetMaxRule}>设置最大长度</Button>
+        <Button onClick={handleGetRules}>打印校验规则</Button>
+      </Space>
     </Form>
   )
 }

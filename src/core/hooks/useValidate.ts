@@ -54,7 +54,7 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     const errors = errs
     // 找到最上面的 dom
     Object.keys(errors).forEach(field => {
-      const dom = document.getElementsByClassName(`meta-form-field-${formId}-${field}`)?.[0]
+      const dom = document.getElementsByClassName(`d-form-field-${formId}-${field}`)?.[0]
       if (dom) {
         const top = dom.getBoundingClientRect().top
         if (!firstTop || firstTop > top) {
@@ -63,7 +63,6 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
         }
       }
     })
-
     firstDom! && firstDom.scrollIntoView()
   }, [])
 
