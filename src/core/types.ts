@@ -67,7 +67,6 @@ export interface UseValidate<VS extends FormValues> {
   getRules: (fields?: string | string[]) => FormRules
   setRules: SetData<FormRules>
   removeRules: (fields: string | string[]) => void
-  setValidateValues: (field: string, value: any) => void
   validate: Validate<VS>
   validateAndScroll: ValidateAndScroll<VS>
 }

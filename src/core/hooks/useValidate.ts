@@ -10,17 +10,14 @@ import {
   ValidateResult,
 } from '../types'
 import Validator from 'async-validator'
-import { useValues } from './useValues'
-import { rulesState, validateValuesState, formIdState, errorsState } from '../states'
-import { useFromState, useSetFromState } from './useRecoilState'
+import { rulesState, formIdState, errorsState, valuesState } from '../states'
+import { useFromState } from './useRecoilState'
 import { useErrors } from './useErrors'
 import _ from 'lodash'
 
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
   const [originRules, setOriginRule] = useFromState(rulesState, false)
-  const setOriginValidateValue = useSetFromState(validateValuesState, false)
   const { setErrors, resetErrors } = useErrors()
-  const { values } = useValues()
 
   const getRules = useCallback((fields) => {
     return fields ? _.pick(originRules, fields) : originRules
@@ -41,10 +38,6 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
       }
     })
   }, [setOriginRule])
-
-  const setValidateValues = useCallback((data, value) => {
-    setOriginValidateValue(data, value)
-  }, [setOriginValidateValue])
 
   const scrollErrors = useRecoilCallback(({ snapshot }) => async (errs: FormErrors) => {
     const formId = await snapshot.getPromise(formIdState)
@@ -69,8 +62,10 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
   const handleValidate: HandleValidate<VS> = useRecoilCallback(({ snapshot }) => async (option) => {
     const { fields, callback = () => { }, isResetErr = false, isScroll = false } = option
     const rules = await snapshot.getPromise(rulesState)
-    const validateValues = await snapshot.getPromise(validateValuesState)
+    const values = await snapshot.getPromise(valuesState)
     const errors = await snapshot.getPromise(errorsState)
+    const allFields = Object.keys(rules)
+    const validateValues = allFields.reduce((pre, cur) => ({ ...pre, [cur]: _.get(values, cur) }), {})
 
     // fields 为空就校验全部字段
     const currentRules = fields ? _.pick(rules, fields) : rules
@@ -141,7 +136,6 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     getRules,
     setRules,
     removeRules,
-    setValidateValues,
     validate,
     validateAndScroll,
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import { nanoid } from 'nanoid'
-import { formIdState, valuesState, initialValuesState, errorsState, rulesState, validateValuesState } from '../states'
+import { formIdState, valuesState, initialValuesState, errorsState, rulesState } from '../states'
 import { FormValues } from '../types'
 
 export const useFormProvider = <VS extends FormValues>(defaultValues?: VS) => {
@@ -13,7 +13,6 @@ export const useFormProvider = <VS extends FormValues>(defaultValues?: VS) => {
       // 主要是我不想放弃 useRecoilState 里的写法
       set(errorsState, {})
       set(rulesState, {})
-      set(validateValuesState, {})
       set(initialValuesState, defaultValues || {})
       set(valuesState, defaultValues || {})
     }

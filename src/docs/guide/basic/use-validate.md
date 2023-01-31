@@ -12,7 +12,7 @@ order: 3
 ```typescript
 const { useValidate } = createForm()
 
-const { getRules, setRules, removeRules, setValidateValues, validate, validateAndScroll } = useValidate()
+const { getRules, setRules, removeRules, validate, validateAndScroll } = useValidate()
 ```
 
 ### 基础校验

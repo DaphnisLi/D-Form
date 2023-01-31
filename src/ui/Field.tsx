@@ -24,7 +24,7 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
   const FormItem = wrapper as React.ComponentType<any>
   const { values, setValues, setInitialValues } = useValues()
   const { errors, removeErrors } = useErrors()
-  const { setRules, removeRules, validate, setValidateValues } = useValidate()
+  const { setRules, removeRules, validate } = useValidate()
   const { formId } = useFormMeta()
 
   const value = props?.value || _.get(values, field)
@@ -68,7 +68,6 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
     const value = e?.target ? e.target?.value : e
     // onFieldChange?.(value) || setValues(field, value) 不可以, 因为 onFieldChange 返回值是 void
     onFieldChange ? onFieldChange?.(value) : setValues(field, value)
-    setValidateValues(field, value)
     validate({
       fields: field,
       callback: (errors) => {

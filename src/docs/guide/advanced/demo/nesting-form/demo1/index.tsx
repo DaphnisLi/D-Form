@@ -71,7 +71,7 @@ const Component = () => {
         <Input />
       </Field>
       <SongFormComponent />
-      <Button onClick={handleSubmit} type="primary">提交</Button>
+      <Button style={{ marginTop: 20 }} onClick={handleSubmit} type="primary">提交</Button>
     </Form>
   )
 }
