@@ -1,10 +1,11 @@
 import { FormValues, UseValues, UseValidate, UseErrors } from '../core'
 import { Rule } from 'async-validator'
 import { ReactElement, ReactNode, ComponentType, ForwardRefRenderFunction, Component, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react'
+import { AntdFieldProps } from '../antd-form'
 
 export type RealComponent<T, CProps> = ComponentType<CProps> | ForwardRefRenderFunction<T, CProps>
 
-export interface BaseStore<VS extends FormValues, FI> {
+export interface BaseStore<VS extends FormValues, FI = AntdFieldProps> {
   withForm: <CP = any, T = Component<CP, {}, any>>(Components: RealComponent<T, CP>) => ForwardRefExoticComponent<PropsWithoutRef<CP> & RefAttributes<unknown>>
   Field: <K extends keyof VS, F> (props: FieldProps<VS[K], FI, F>) => JSX.Element
   useValues: () => UseValues<VS>

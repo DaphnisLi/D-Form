@@ -11,8 +11,9 @@ import {
 } from '../core'
 import { BaseStore, FieldProps } from './types'
 import { Field as FieldElement } from './Field'
+import { AntdFieldProps } from '../antd-form'
 
-export const createFormFactory = <FI, >(FieldWrapperComponent: React.ComponentType<FI>) => {
+export const createFormFactory = <FI extends AntdFieldProps>(FieldWrapperComponent: React.ComponentType<FI>) => {
   return <VS extends FormValues>(defaultValues?: VS) => {
     const FormProvider = useFormProvider(defaultValues)
 

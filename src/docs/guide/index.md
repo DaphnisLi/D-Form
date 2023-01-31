@@ -22,6 +22,5 @@ npm i @daphnis/d-form
 ## 待办事项
 - [x] 数据和 UI 分离
 - [x] 支持 path 修改表单状态, 目前只支持 field、useValues、useNoSubscribeUpdate
-- [ ] 子表单
 - [ ] 表单元信息、表单生成器
 - [ ] validateAndScroll 设置偏移量
