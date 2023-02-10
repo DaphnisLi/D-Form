@@ -18,4 +18,5 @@ export default defineConfig({
   ],
   mfsu: {},
   hash: true,
+  publicPath: '/docs/'
 })
