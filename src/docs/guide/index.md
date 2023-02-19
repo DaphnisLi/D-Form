@@ -24,3 +24,4 @@ npm i @daphnis/d-form
 - [x] 支持 path 修改表单状态, 目前只支持 field、useValues、useNoSubscribeUpdate
 - [ ] 表单元信息、表单生成器
 - [ ] validateAndScroll 设置偏移量
+- [ ] 引入单元测试（投入使用时）
