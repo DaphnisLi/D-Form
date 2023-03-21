@@ -42,3 +42,7 @@ npm i @daphnis/d-form
 - 表单校验使用 async-validator，在 onChang 时校验，完成后将错误传给 Form.Item
 - 表单嵌套及复用：每一个根表单要有一个单独的 RecoilRoot，子表单封装成一个函数，接收一个表单状态 Store 即可直观的实现表单嵌套和复用，字段名称 field 采用 [path 模式](https://www.lodashjs.com/docs/lodash.get)，这样可以方便的管理各级数据。
   - 未来会提供一个生成子表单的方法 createSubForm
+
+## 架构图
+
+![D-Form 架构](https://form.daphnis.love/architectureDiagram.png)
