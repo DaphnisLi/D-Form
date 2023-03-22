@@ -11,5 +11,6 @@
     "linebreak",
     "singleline",
     "Cascader",
+    "immer",
   ],
 }

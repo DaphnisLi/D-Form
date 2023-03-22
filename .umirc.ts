@@ -18,4 +18,18 @@ export default defineConfig({
   ],
   mfsu: {},
   hash: true,
+  styles: [
+    `.__dumi-default-layout-hero{
+      background-image: url(https://form.daphnis.love/formIndex.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 120px 0 !important;
+    }
+    .__dumi-default-layout-hero h1{
+      color:#45124e !important;
+      font-size:80px !important;
+      padding-bottom: 30px !important;
+    }
+    `,
+  ],
 })
