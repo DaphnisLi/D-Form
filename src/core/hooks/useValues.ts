@@ -2,22 +2,20 @@ import { useCallback } from 'react'
 import { useRecoilValue, useRecoilCallback } from 'recoil'
 import { UseValues, FormValues } from '../types'
 import { valuesState, initialValuesState } from '../states'
-import { useFromState, useSetFromStatePath } from './useRecoilState'
+import { useFromState, useSetFromStatePath } from './useImmerRecoilState'
 import _ from 'lodash'
 
 export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'values' | 'initialValues'> => {
   const setOriginValues = useSetFromStatePath(valuesState)
   const [originInitialValues, , setOriginInitialValues] = useFromState(initialValuesState)
 
-  const setValues = useCallback((data, value) => {
-    setOriginValues(data, value)
-  }, [])
+  const setValues: UseValues<VS>['setValues'] = setOriginValues
 
-  const resetValues = useRecoilCallback(({ set }) => async () => {
+  const resetValues: UseValues<VS>['resetValues'] = useRecoilCallback(({ set }) => () => {
     set(valuesState, originInitialValues)
   }, [originInitialValues])
 
-  const removeValues = useCallback((fields) => {
+  const removeValues: UseValues<VS>['removeValues'] = useCallback((fields) => {
     setOriginValues(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {
@@ -29,9 +27,7 @@ export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'valu
     })
   }, [])
 
-  const setInitialValues = useCallback((data, value) => {
-    setOriginInitialValues(data, value)
-  }, [])
+  const setInitialValues: UseValues<VS>['setInitialValues'] = setOriginInitialValues
 
   return {
     setValues,

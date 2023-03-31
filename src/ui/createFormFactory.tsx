@@ -7,7 +7,6 @@ import {
   useErrors,
   useSetErrors,
   useValidate,
-  useNoSubscribeUpdate,
 } from '../core'
 import { BaseStore, FieldProps } from './types'
 import { Field as FieldElement } from './Field'
@@ -34,7 +33,6 @@ export const createFormFactory = <FI extends AntdFieldProps>(FieldWrapperCompone
       useErrors,
       useSetErrors,
       useValidate,
-      useNoSubscribeUpdate,
     } as BaseStore<VS, FI>
   }
 }

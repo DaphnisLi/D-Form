@@ -7,18 +7,16 @@ order: 2
 
 ### 表单值 API
 
-通过 `createForm` 创建的表单实例，提供了 `useValues、useSetValues、useNoSubscribeUpdate` 来对表单值进行管理。
+通过 `createForm` 创建的表单实例，提供了 `useValues、useSetValues` 来对表单值进行管理。
 
-`useNoSubscribeUpdate` 和 `useValues` 的区别在于, useNoSubscribeUpdate 不会订阅组件的更新, 只会保证状态的持久化
 
 ```typescript
-const { useValues, useSetValues, useNoSubscribeUpdate } = createForm()
+const { useValues, useSetValues } = createForm()
 
 const { initialValues, values, setValues, resetValues, removeValues, setInitialValues } = useValues()
 
 const { setValues, resetValues, removeValues, setInitialValues } = useSetValues()
 
-const { initialValues, values, setValues, resetValues, removeValues, setInitialValues } = useNoSubscribeUpdate()
 ```
 
 ### 多种类型表单项的值

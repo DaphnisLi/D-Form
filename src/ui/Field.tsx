@@ -39,20 +39,11 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
 
   useEffect(() => {
     if (!rule && !required) return
-
     const defaultMessage = '不能为空'
     const requiredRule = { required, message: defaultMessage }
-
-    setRules(draft => {
-      if (Array.isArray(rule)) {
-        draft[field] = [requiredRule, ...rule]
-      } else if (isObject(rule!)) {
-        draft[field] = [rule!, requiredRule]
-      } else {
-        draft[field] = requiredRule
-      }
-    })
-  }, [rule, required])
+    const rules = Array.isArray(rule) ? [requiredRule, ...rule] : isObject(rule!) ? [requiredRule, rule!] : requiredRule
+    setRules(field, rules)
+  }, [JSON.stringify(rule), required, field])
 
   // 当前组件卸载时, Rule、Error 同步删除
   useEffect(() => () => {

@@ -3,32 +3,31 @@ import { useRecoilCallback } from 'recoil'
 import {
   UseValidate,
   FormValues,
-  Validate,
-  ValidateAndScroll,
   FormErrors,
   HandleValidate,
   ValidateResult,
 } from '../types'
 import Validator from 'async-validator'
 import { rulesState, formIdState, errorsState, valuesState } from '../states'
-import { useFromState } from './useRecoilState'
+import { useFromState } from './useImmerRecoilState'
 import { useErrors } from './useErrors'
 import _ from 'lodash'
 
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
-  const [originRules, setOriginRule] = useFromState(rulesState, false)
+  const [originRules, setOriginRule] = useFromState(rulesState)
   const { setErrors, resetErrors } = useErrors()
 
-  const getRules = useCallback((fields) => {
+  const getRules: UseValidate<VS>['getRules'] = useCallback((fields) => {
     return fields ? _.pick(originRules, fields) : originRules
   }, [originRules])
 
-  const setRules = useCallback((data, value) => {
-    setOriginRule(data, value)
-  }, [setOriginRule])
+  const setRules: UseValidate<VS>['setRules'] = useCallback((field, rule) => {
+    setOriginRule((rules) => ({ ...rules, [field]: rule }))
+  }, [])
 
-  const removeRules = useCallback(fields => {
+  const removeRules: UseValidate<VS>['removeRules'] = useCallback((fields) => {
     setOriginRule((draft) => {
+      const newRules = { ...originRules }
       if (Array.isArray(fields)) {
         fields.forEach(field => {
           delete draft[field]
@@ -36,8 +35,9 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
       } else {
         delete draft[fields]
       }
+      return newRules
     })
-  }, [setOriginRule])
+  }, [])
 
   const scrollErrors = useRecoilCallback(({ snapshot }) => async (errs: FormErrors) => {
     const formId = await snapshot.getPromise(formIdState)
@@ -112,25 +112,25 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
 
         return { errors, fields, isPass: !errors }
       })
-  }, [scrollErrors])
+  }, [])
 
-  const validate: Validate<VS> = useCallback((option) => {
+  const validate: UseValidate<VS>['validate'] = useCallback((option) => {
     return handleValidate({
       fields: option?.fields && (Array.isArray(option.fields) ? option.fields : [option.fields]),
       callback: option?.callback,
       isResetErr: option?.isResetErr || !option?.fields,
       isScroll: false,
     })
-  }, [handleValidate])
+  }, [])
 
-  const validateAndScroll: ValidateAndScroll<VS> = useCallback((option) => {
+  const validateAndScroll: UseValidate<VS>['validateAndScroll'] = useCallback((option) => {
     return handleValidate({
       fields: option?.fields && (Array.isArray(option.fields) ? option.fields : [option.fields]),
       callback: option?.callback,
       isResetErr: option?.isResetErr || !option?.fields,
       isScroll: true,
     })
-  }, [handleValidate])
+  }, [])
 
   return {
     getRules,

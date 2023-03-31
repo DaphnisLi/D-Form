@@ -2,21 +2,19 @@ import { useCallback } from 'react'
 import { useRecoilValue, useRecoilCallback } from 'recoil'
 import { UseErrors } from '../types'
 import { errorsState } from '../states'
-import { useSetFromState } from './useRecoilState'
+import { useSetFromState } from './useImmerRecoilState'
 
 export const useSetErrors = (): Omit<UseErrors, 'errors'> => {
   const setOriginErrors = useSetFromState(errorsState)
 
-  const setErrors = useCallback((data, value) => {
-    setOriginErrors(data, value)
-  }, [])
+  const setErrors: UseErrors['setErrors'] = setOriginErrors
 
 
-  const resetErrors = useRecoilCallback(({ set }) => async () => {
+  const resetErrors: UseErrors['resetErrors'] = useRecoilCallback(({ set }) => async () => {
     set(errorsState, {})
   }, [])
 
-  const removeErrors = useCallback((fields) => {
+  const removeErrors: UseErrors['removeErrors'] = useCallback((fields) => {
     setOriginErrors(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {

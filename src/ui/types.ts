@@ -13,7 +13,6 @@ export interface BaseStore<VS extends FormValues, FI = AntdFieldProps> {
   useErrors: () => UseErrors
   useSetErrors: () => Omit<UseErrors, 'errors'>
   useValidate: () => UseValidate<VS>
-  useNoSubscribeUpdate: () => UseValues<VS>
 }
 
 export type FieldProps<V, FI, F> = FieldCustomizeProps<V, FI, F> & Omit<FI, keyof FieldCustomizeProps<V, FI, F>>
