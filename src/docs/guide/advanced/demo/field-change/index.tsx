@@ -62,7 +62,7 @@ const Component = () => {
         <Input />
       </Field>
       <Field
-        field="compose"
+        field="noCompose"
         label="我偏不改 compose, 就要改 writeWords"
         value={values?.song?.writeWords}
         onChange={(v) => setValues('song.writeWords', v)}

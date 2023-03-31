@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useRecoilCallback } from 'recoil'
+import { useRecoilCallback, useSetRecoilState } from 'recoil'
 import {
   UseValidate,
   FormValues,
@@ -8,7 +8,7 @@ import {
   ValidateResult,
 } from '../types'
 import Validator from 'async-validator'
-import { rulesState, formIdState, errorsState, valuesState } from '../states'
+import { rulesState, formIdState, errorsState, valuesState, validateValuesState } from '../states'
 import { useFromState } from './useImmerRecoilState'
 import { useErrors } from './useErrors'
 import _ from 'lodash'
@@ -16,6 +16,12 @@ import _ from 'lodash'
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
   const [originRules, setOriginRule] = useFromState(rulesState)
   const { setErrors, resetErrors } = useErrors()
+
+  const originSetValidateValues = useSetRecoilState<FormValues>(validateValuesState)
+
+  const setValidateValues = useCallback((field: string, value: any) => {
+    originSetValidateValues((prev) => ({ ...prev, [field]: value }))
+  }, [])
 
   const getRules: UseValidate<VS>['getRules'] = useCallback((fields) => {
     return fields ? _.pick(originRules, fields) : originRules
@@ -64,8 +70,10 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     const rules = await snapshot.getPromise(rulesState)
     const values = await snapshot.getPromise(valuesState)
     const errors = await snapshot.getPromise(errorsState)
+    const originValidateValues = await snapshot.getPromise(validateValuesState)
+
     const allFields = Object.keys(rules)
-    const validateValues = allFields.reduce((pre, cur) => ({ ...pre, [cur]: _.get(values, cur) }), {})
+    const validateValues = allFields.reduce((pre, cur) => ({ ...pre, [cur]: originValidateValues[cur] }), {})
 
     // fields 为空就校验全部字段
     const currentRules = fields ? _.pick(rules, fields) : rules
@@ -138,5 +146,6 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     removeRules,
     validate,
     validateAndScroll,
+    setValidateValues,
   }
 }

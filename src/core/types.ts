@@ -70,6 +70,7 @@ export interface UseValidate<VS extends FormValues> {
   removeRules: (fields: string | string[]) => void
   validate: Validate<VS>
   validateAndScroll: ValidateAndScroll<VS>
+  setValidateValues: (field: string, rule: Rule) => void
 }
 
 export interface UseFormMeta {
