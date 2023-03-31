@@ -2,7 +2,7 @@ import { ValidateError, Rule } from 'async-validator'
 import { Draft } from 'immer'
 
 
-export type SetData<D> = <K extends keyof Draft<D>> (data: K | Partial<D> | ((draft: Draft<D>) => void | D), value?: Draft<D>[K]) => void
+export type SetData<D> = <K extends keyof Draft<D>> (data: string | K | Partial<D> | ((draft: Draft<D>) => void | D), value?: Draft<D>[K]) => void
 
 export interface FormValues {
   [key: string]: any
