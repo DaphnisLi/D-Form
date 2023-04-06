@@ -9,37 +9,41 @@ import {
 } from '../types'
 import Validator from 'async-validator'
 import { rulesState, formIdState, errorsState, valuesState, validateValuesState } from '../states'
-import { useFromState } from './useImmerRecoilState'
 import { useErrors } from './useErrors'
 import _ from 'lodash'
 
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
-  const [originRules, setOriginRule] = useFromState(rulesState)
+  const setOriginRule = useSetRecoilState(rulesState)
   const { setErrors, resetErrors } = useErrors()
 
-  const originSetValidateValues = useSetRecoilState<FormValues>(validateValuesState)
+  const setOriginValidateValues = useSetRecoilState<FormValues>(validateValuesState)
 
   const setValidateValues = useCallback((field: string, value: any) => {
-    originSetValidateValues((prev) => ({ ...prev, [field]: value }))
+    setOriginValidateValues((prev) => ({ ...prev, [field]: value }))
   }, [])
 
-  const getRules: UseValidate<VS>['getRules'] = useCallback((fields) => {
+  const getRules: UseValidate<VS>['getRules'] = useRecoilCallback(({ snapshot }) => async (fields) => {
+    const originRules = await snapshot.getPromise(rulesState)
     return fields ? _.pick(originRules, fields) : originRules
-  }, [originRules])
+  }, [])
 
   const setRules: UseValidate<VS>['setRules'] = useCallback((field, rule) => {
-    setOriginRule((rules) => ({ ...rules, [field]: rule }))
+    setOriginRule((rules) => {
+      const newRules = _.cloneDeep(rules)
+      newRules[field] = rule
+      return newRules
+    })
   }, [])
 
   const removeRules: UseValidate<VS>['removeRules'] = useCallback((fields) => {
-    setOriginRule((draft) => {
-      const newRules = { ...originRules }
+    setOriginRule((rules) => {
+      const newRules = _.cloneDeep(rules)
       if (Array.isArray(fields)) {
         fields.forEach(field => {
-          delete draft[field]
+          delete newRules[field]
         })
       } else {
-        delete draft[fields]
+        delete newRules[fields]
       }
       return newRules
     })

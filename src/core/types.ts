@@ -65,7 +65,7 @@ export interface UseErrors {
 }
 
 export interface UseValidate<VS extends FormValues> {
-  getRules: (fields?: string | string[]) => FormRules
+  getRules: (fields?: string | string[]) => Promise<FormRules>
   setRules: (field: string, rule: Rule) => void
   removeRules: (fields: string | string[]) => void
   validate: Validate<VS>

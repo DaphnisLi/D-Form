@@ -44,7 +44,7 @@ const Component = () => {
   }
 
   const handleGetRules = async () => {
-    console.log(getRules())
+    console.log(await getRules())
   }
 
   return (
