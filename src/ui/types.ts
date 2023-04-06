@@ -45,6 +45,8 @@ type FieldCustomizeProps<V, FI, F> = {
   onChange?: (value: F) => void
   /** 不对外使用 */
   wrapper?: ComponentType<FI>
+  /** 样式 */
+  style?: React.CSSProperties
 }
 
 interface FieldChildProps<V> {

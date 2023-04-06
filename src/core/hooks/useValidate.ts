@@ -45,15 +45,15 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     })
   }, [])
 
-  const scrollErrors = useRecoilCallback(({ snapshot }) => async (errs: FormErrors) => {
+  const scrollErrors = useRecoilCallback(({ snapshot }) => async (errs: FormErrors, scrollToErrorOffsetTop?: string) => {
     const formId = await snapshot.getPromise(formIdState)
 
-    let firstDom: Element
+    let firstDom: HTMLElement
     let firstTop: number
     const errors = errs
     // 找到最上面的 dom
     Object.keys(errors).forEach(field => {
-      const dom = document.getElementsByClassName(`d-form-field-${formId}-${field}`)?.[0]
+      const dom = document.getElementsByClassName(`d-form-field-${formId}-${field}`)?.[0] as HTMLElement
       if (dom) {
         const top = dom.getBoundingClientRect().top
         if (!firstTop || firstTop > top) {
@@ -62,11 +62,14 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
         }
       }
     })
-    firstDom! && firstDom.scrollIntoView()
+    if (firstDom!) {
+      firstDom.style.scrollMarginTop = scrollToErrorOffsetTop!
+      firstDom.scrollIntoView()
+    }
   }, [])
 
   const handleValidate: HandleValidate<VS> = useRecoilCallback(({ snapshot }) => async (option) => {
-    const { fields, callback = () => { }, isResetErr = false, isScroll = false } = option
+    const { fields, callback = () => { }, isResetErr = false, isScroll = false, scrollToErrorOffsetTop } = option
     const rules = await snapshot.getPromise(rulesState)
     const values = await snapshot.getPromise(valuesState)
     const errors = await snapshot.getPromise(errorsState)
@@ -96,7 +99,7 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
         }, isResetErr ? {} : beforeErr)
 
         setErrors(errs)
-        isScroll && scrollErrors(errs)
+        isScroll && scrollErrors(errs, scrollToErrorOffsetTop)
       } else {
         if (isResetErr) {
           resetErrors()
@@ -124,8 +127,8 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
 
   const validate: UseValidate<VS>['validate'] = useCallback((option) => {
     return handleValidate({
+      ...option,
       fields: option?.fields && (Array.isArray(option.fields) ? option.fields : [option.fields]),
-      callback: option?.callback,
       isResetErr: option?.isResetErr || !option?.fields,
       isScroll: false,
     })
@@ -133,8 +136,8 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
 
   const validateAndScroll: UseValidate<VS>['validateAndScroll'] = useCallback((option) => {
     return handleValidate({
+      ...option,
       fields: option?.fields && (Array.isArray(option.fields) ? option.fields : [option.fields]),
-      callback: option?.callback,
       isResetErr: option?.isResetErr || !option?.fields,
       isScroll: true,
     })

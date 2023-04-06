@@ -21,7 +21,9 @@ const Component = () => {
   const { validateAndScroll } = useValidate()
 
   const handleSubmit = async () => {
-    const validateRes = await validateAndScroll()
+    const validateRes = await validateAndScroll({
+      scrollToErrorOffsetTop: '100px',
+    })
     if (!validateRes.isPass) {
       return message.error('表单值校验错误')
     }

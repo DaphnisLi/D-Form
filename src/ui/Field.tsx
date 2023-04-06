@@ -91,9 +91,9 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
 
   return (
     <FormItem
+      {...formItemProps}
       error={showError && error}
       validateStatus={error && showError && 'error'}
-      {...formItemProps}
       className={`d-form-field d-form-field-${formId}-${field}${className ? ` ${className}` : ''}`}
       onChange={() => { }}
     >

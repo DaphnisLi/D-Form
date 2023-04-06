@@ -35,16 +35,16 @@ export interface ValidateOption<VS> {
   isResetErr?: boolean
   /** 是否在校验失败时自动滚动到错误 field */
   isScroll?: boolean
+  /** 滚动到错误的偏移量 */
+  scrollToErrorOffsetTop?: string
 
   // ? 未来可能支持
-  /** 校验多个 field 和对应表单值 */
-  // fieldsValue?: { [key: string]: any }
   /** 排除在外的多个 field */
   // excludeFields?: string[]
 }
 
 export type Validate<VS> = (option?: Omit<ValidateOption<VS>, 'isScroll'>) => Promise<ValidateResult>
-export type ValidateAndScroll<VS> = (option?: ValidateOption<VS>) => Promise<ValidateResult>
+export type ValidateAndScroll<VS> = (option?: Omit<ValidateOption<VS>, 'isScroll'>) => Promise<ValidateResult>
 
 export type HandleValidate<VS> = (option: ValidateOption<VS>) => Promise<ValidateResult>
 
