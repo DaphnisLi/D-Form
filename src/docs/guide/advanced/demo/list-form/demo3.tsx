@@ -1,11 +1,11 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Input, message, Table, TableColumnProps, Space } from 'antd'
+import { Button, Input, message, Space } from 'antd'
+import VirtualList from './VirtualList'
 
 interface ListItem {
   songA: string
   songB: string
-  rowKey: number
 }
 
 interface BaseFormField {
@@ -13,7 +13,7 @@ interface BaseFormField {
 }
 
 export const formStore = createForm<BaseFormField>({
-  list: [{ songA: '', songB: '', rowKey: 0 }],
+  list: Array.from(new Array(1000), () => ({ songA: '', songB: '' })),
 })
 
 const { useValues, useValidate, Field, withForm } = formStore
@@ -31,7 +31,7 @@ const Component = () => {
   }
 
   const handleAddItem = () => {
-    const newList = values?.list?.concat({ songA: '', songB: '', rowKey: values?.list.length + 1 })
+    const newList = values?.list?.concat({ songA: '', songB: '' })
     setValues('list', newList)
   }
 
@@ -39,8 +39,15 @@ const Component = () => {
     const newList = values?.list?.filter((item, i) => i !== index)
     setValues('list', newList)
   }
-
-  const columns: TableColumnProps<ListItem>[] = [
+  console.log(values.list)
+  const columns = [
+    {
+      dataIndex: 'index',
+      title: '序号',
+      render: (text, record, index) => {
+        return index
+      }
+    },
     {
       dataIndex: 'songA',
       title: 'songA',
@@ -79,10 +86,9 @@ const Component = () => {
       }
     }
   ]
-
   return (
     <>
-      <Table
+      <VirtualList
         columns={columns}
         dataSource={values.list}
         footer={() => {
@@ -93,9 +99,7 @@ const Component = () => {
             </Space>
           )
         }}
-        pagination={false}
-        style={{ marginBottom: 20 }}
-        rowKey={record => record.rowKey}
+        rowHeight={56}
       />
     </>
   )
