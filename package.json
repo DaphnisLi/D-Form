@@ -11,7 +11,7 @@
     "start": "dumi dev",
     "docs:build": "dumi build",
     "build": "rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "rm -rf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s",
     "lint": "eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src",
     "lint-fix": "eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix",
     "commit-lint": "commitlint --from origin/master --to HEAD",
