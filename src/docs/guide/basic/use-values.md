@@ -27,6 +27,10 @@ const { setValues, resetValues, removeValues, setInitialValues } = useSetValues(
 
 <code src="./demo/use-values/demo2.tsx"></code>
 
+### 基于 immer 能有效改善 React setState 的烦恼
+
+<code src="./demo/use-values/demo3.tsx"></code>
+
 ### values
 
 表单上各个字段的值的集合
