@@ -14,3 +14,11 @@ order: 4
 
 ### 三层嵌套表单
 <code src="./demo/nesting-form/demo1"></code>
+
+### 子表单嵌套复用
+歌名是一个单独的子表单
+
+在上面的 case 用于第三层并且采用数组的形式渲染 prefix={`song.iLike[${index}]`}
+
+在本例子作用于第二层 prefix="iLike"
+<code src="./demo/nesting-form/demo2"></code>

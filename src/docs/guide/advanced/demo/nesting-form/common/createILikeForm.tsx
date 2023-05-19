@@ -1,16 +1,14 @@
 import React from 'react'
 import { Input } from 'antd'
 import { BaseStore } from '@daphnis/d-form'
-import { BaseFormField } from './index'
 
-const createILikeForm = (formStore: BaseStore<BaseFormField>) => {
+const createILikeForm = (formStore: BaseStore<any>) => {
   const { Field } = formStore
-  return (props: { index: number }) => {
-    const { index } = props
-    const namespace = `song.iLike[${index}]`
+  return (props: { prefix: string }) => {
+    const { prefix } = props
     return (
       <Field
-        field={`${namespace}.title`}
+        field={`${prefix}.title`}
         label="歌名"
         required
       >

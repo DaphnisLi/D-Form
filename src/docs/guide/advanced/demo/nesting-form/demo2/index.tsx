@@ -1,7 +1,7 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
 import { Button, Input, message, Form } from 'antd'
-import createSongForm from './createSongForm'
+import createILikeForm from '../common/createILikeForm'
 
 const formItemLayout = {
   labelCol: {
@@ -17,41 +17,23 @@ interface ILike {
   title: string
 }
 
-interface Song {
-  title: string
-  compose: string
-  writeWords: string
-  iLike: ILike[]
-}
-
 export interface BaseFormField {
   singer: string
-  song: Song
+  iLike: ILike
 }
-
 
 export const formStore = createForm<BaseFormField>(
   {
     singer: '周杰伦',
-    song: {
+    iLike: {
       title: '一点点',
-      compose: '周杰伦',
-      writeWords: '方文山',
-      iLike: [
-        {
-          title: '一点点',
-        },
-        {
-          title: '晴天',
-        },
-      ]
     }
   }
 )
 
 const { useValues, useValidate, Field, withForm } = formStore
 
-const SongFormComponent = createSongForm(formStore)
+const ILikeForm = createILikeForm(formStore)
 
 const Component = () => {
   const { values } = useValues()
@@ -75,7 +57,7 @@ const Component = () => {
       >
         <Input />
       </Field>
-      <SongFormComponent />
+      <ILikeForm prefix="iLike" />
       <Button style={{ marginTop: 20 }} onClick={handleSubmit} type="primary">提交</Button>
     </Form>
   )

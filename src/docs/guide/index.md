@@ -24,6 +24,7 @@ order: 1
 - 如何管理深层次的字段 ?
   - 可以采用 [path 模式](https://www.lodashjs.com/docs/lodash.get) 的方式进行管理。
   - 提供一个创建子表单的方法 createSubForm
+  - [案例](/guide/advanced/nesting-form#%E5%AD%90%E8%A1%A8%E5%8D%95%E5%B5%8C%E5%A5%97%E5%A4%8D%E7%94%A8)
 - 如何适配不同的组件库
   - 模仿 d-form-antd 包, 创建一个新的 NPM 包
 
