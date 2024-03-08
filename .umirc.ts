@@ -2,11 +2,12 @@
 
 import { defineConfig } from 'dumi'
 
+const logo = 'https://common-1305245006.cos.ap-shanghai.myqcloud.com/orange.png'
+
 export default defineConfig({
   title: 'D-Form',
-  favicon:
-    'https://s2.loli.net/2022/08/14/51A6SiswhVeGnRL.png',
-  logo: 'https://s2.loli.net/2022/08/14/51A6SiswhVeGnRL.png',
+  favicon: logo,
+  logo,
   outputPath: 'docs',
   resolve: {
     includes: ['./src/docs'],
