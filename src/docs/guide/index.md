@@ -29,7 +29,7 @@ order: 1
   - 模仿 d-form-antd 包, 创建一个新的 NPM 包
 
 ## 架构图
-![D-Form 架构](https://form.daphnis.love/architectureDiagram.png)
+![D-Form 架构](https://form-1305245006.cos-website.ap-shanghai.myqcloud.com/architectureDiagram.png)
 
 ## 发展历程
 其实一开始的实现方案不是下面的那个。

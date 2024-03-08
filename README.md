@@ -5,7 +5,7 @@
 随着实力的不断提高。终于在 23 年新年假期期间想到，我要自己做一个开源表单库，并且希望此表单库能够为团队内的表单库优化带来动力。
 
 ## 介绍
-- 文档：https://form.daphnis.love
+- 文档：https://form-1305245006.cos-website.ap-shanghai.myqcloud.com
 - 技术栈：Typescript、React、Recoil、Antd、
 - 构建：模块化基于 ESM、构建基于 Rollup
   - 目前基于 TS 提供 type 和 ESM。基于 Rollup 提供 UMD 和 UMD.min

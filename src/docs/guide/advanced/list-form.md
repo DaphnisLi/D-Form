@@ -30,4 +30,4 @@ order: 2
   - 向下滚动: 设置缓存数据, 偏移量 >= cacheCount 时 setList
   - 向上滚动: 暂时无法优化, 只能缓存后面的数据, 不能缓存前面的数据, 因为 list 是从 0 开始渲染的.
 
-![虚拟列表](https://form.daphnis.love/virtualList.png)
+![虚拟列表](https://form-1305245006.cos-website.ap-shanghai.myqcloud.com/virtualList.png)

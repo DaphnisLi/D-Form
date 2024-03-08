@@ -20,7 +20,7 @@ export default defineConfig({
   hash: true,
   styles: [
     `.__dumi-default-layout-hero{
-      background-image: url(https://form.daphnis.love/formIndex.png);
+      background-image: url(https://form-1305245006.cos-website.ap-shanghai.myqcloud.com/formIndex.png);
       background-size: cover;
       background-repeat: no-repeat;
       padding: 120px 0 !important;
