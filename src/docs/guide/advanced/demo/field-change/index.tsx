@@ -1,6 +1,6 @@
 import React from 'react'
 import { createForm } from '@daphnis/d-form'
-import { Button, Input, message, Form } from 'antd'
+import { Button, Input, message, Form, Space } from 'antd'
 
 const formItemLayout = {
   labelCol: {
@@ -40,16 +40,21 @@ const Component = () => {
     <Form {...formItemLayout}>
       <Field
         field="songTitle"
-        label="歌名"
+        label="歌名(默认 value、onChange)"
         required
       >
         <Input />
       </Field>
       <Field
         field="compose"
-        label="作曲"
+        label="作曲(自定义 value、onChange), 联动作词"
         value={values?.song?.compose}
-        onChange={(v) => setValues('song.compose', v)}
+        onChange={(v) => {
+          setValues((values) => {
+            values['song.compose'] = v
+            values['song.writeWords'] = `${Math.random()}`
+          })
+        }}
         required
       >
         <Input />
@@ -61,16 +66,11 @@ const Component = () => {
       >
         <Input />
       </Field>
-      <Field
-        field="noCompose"
-        label="我偏不改 compose, 就要改 writeWords"
-        value={values?.song?.writeWords}
-        onChange={(v) => setValues('song.writeWords', v)}
-        required
-      >
-        <Input />
-      </Field>
-      <Button onClick={handleSubmit} type="primary">提交</Button>
+      <Space>
+        <Button onClick={() => setValues('songTitle', `${Math.random()}`)}>修改歌名</Button>
+        <Button onClick={handleSubmit} type="primary">提交</Button>
+        表单值: {JSON.stringify(values)}
+      </Space>
     </Form>
   )
 }

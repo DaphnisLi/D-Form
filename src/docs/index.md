@@ -5,19 +5,16 @@ hero:
 title: 首页
 ---
 
-
 ## 安装
 ``` bash
 npm i @daphnis/d-form
 ```
 
 ## 特性
-- 学习成本低
-- 开发简单
+- 简单: 学习简单、使用简单
+- 覆盖任何表单场景
 - 几乎没有坑点
 - 性能及格
-- 支持 Ant Design Form
-- 内置 [async-validator](https://github.com/yiminghe/async-validator) 进行表单校验
-- 支持复杂表单状态的嵌套管理
-- 简洁、符合直觉的 API 设计
+- 全面拥抱 TypeScript、React Hook
+- 可灵活接入任何 UI 组件库, 默认支持 Ant Design Form
 - 支持按需引入
