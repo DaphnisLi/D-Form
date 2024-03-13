@@ -10,7 +10,7 @@ import {
 import Validator from 'async-validator'
 import { rulesState, formIdState, errorsState, valuesState, validateValuesState } from '../states'
 import { useErrors } from './useErrors'
-import _ from 'lodash'
+import { pick, cloneDeep } from 'lodash-es'
 
 export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
   const setOriginRule = useSetRecoilState(rulesState)
@@ -24,12 +24,12 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
 
   const getRules: UseValidate<VS>['getRules'] = useRecoilCallback(({ snapshot }) => async (fields) => {
     const originRules = await snapshot.getPromise(rulesState)
-    return fields ? _.pick(originRules, fields) : originRules
+    return fields ? pick(originRules, fields) : originRules
   }, [])
 
   const setRules: UseValidate<VS>['setRules'] = useCallback((field, rule) => {
     setOriginRule((rules) => {
-      const newRules = _.cloneDeep(rules)
+      const newRules = cloneDeep(rules)
       newRules[field] = rule
       return newRules
     })
@@ -37,7 +37,7 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
 
   const removeRules: UseValidate<VS>['removeRules'] = useCallback((fields) => {
     setOriginRule((rules) => {
-      const newRules = _.cloneDeep(rules)
+      const newRules = cloneDeep(rules)
       if (Array.isArray(fields)) {
         fields.forEach(field => {
           delete newRules[field]
@@ -83,8 +83,8 @@ export const useValidate = <VS extends FormValues>(): UseValidate<VS> => {
     const validateValues = allFields.reduce((pre, cur) => ({ ...pre, [cur]: originValidateValues[cur] }), {})
 
     // fields 为空就校验全部字段
-    const currentRules = fields ? _.pick(rules, fields) : rules
-    const currentValidateValues = fields ? _.pick(validateValues, fields) : validateValues
+    const currentRules = fields ? pick(rules, fields) : rules
+    const currentValidateValues = fields ? pick(validateValues, fields) : validateValues
 
     // 排除掉空 rule, 其实是没有这种情况, 但 core 后面可能会做成一个 npm 包, 所以还是要做校验
     for (const key in currentRules) {

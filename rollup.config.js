@@ -10,7 +10,6 @@ const commonBundleConfigs = {
   sourcemap: true,
   globals: {
     react: 'React',
-    lodash: '_',
     antd: 'antd',
   },
 }
@@ -47,7 +46,6 @@ export default {
 
   external: [
     'react',
-    'lodash',
     'antd',
   ],
 }

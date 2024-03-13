@@ -3,7 +3,7 @@ import { useRecoilValue, useRecoilCallback } from 'recoil'
 import { UseValues, FormValues } from '../types'
 import { valuesState, initialValuesState } from '../states'
 import { useFromState, useSetFromStatePath } from './useImmerRecoilState'
-import _ from 'lodash'
+import { set } from 'lodash-es'
 
 export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'values' | 'initialValues'> => {
   const setOriginValues = useSetFromStatePath(valuesState)
@@ -19,10 +19,10 @@ export const useSetValues = <VS extends FormValues>(): Omit<UseValues<VS>, 'valu
     setOriginValues(draft => {
       if (Array.isArray(fields)) {
         fields.forEach(item => {
-          _.set(draft, item, undefined)
+          set(draft, item, undefined)
         })
       } else {
-        _.set(draft, fields, undefined)
+        set(draft, fields, undefined)
       }
     })
   }, [])

@@ -2,7 +2,7 @@ import React, { Children, cloneElement, useCallback, useEffect, useMemo } from '
 import { useValues, useErrors, useValidate, useFormMeta, FormValues } from '../core'
 import { isObject } from './libs'
 import { FieldProps } from './types'
-import _ from 'lodash'
+import { get, set, omit } from 'lodash-es'
 
 export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: FieldProps<VS[K], FI, F>) => {
   const {
@@ -27,13 +27,13 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
   const { setRules, removeRules, validate, setValidateValues } = useValidate()
   const { formId } = useFormMeta()
 
-  const value = props?.value || _.get(values, field)
+  const value = props?.value || get(values, field)
 
   const error = errors[field]
 
   useEffect(() => {
     initialValue && setInitialValues(draft => {
-      _.set(draft, field, initialValue)
+      set(draft, field, initialValue)
     })
   }, [initialValue, field])
 
@@ -87,7 +87,7 @@ export const Field = <VS extends FormValues, K extends keyof VS, FI, F>(props: F
 
   // 不需要将某些 props 传给 FormItem 组件, 否则会透传到原始 Form.Item 上引起报错 https://fb.me/react-attribute-behavior
   const excludePropsKeys = ['addItem', 'pureChildren', 'rule', 'isDelRulesWhenDestroy', 'wrapper', 'valuePropKey']
-  const formItemProps = _.omit(props, excludePropsKeys)
+  const formItemProps = omit(props, excludePropsKeys)
 
   return (
     <FormItem

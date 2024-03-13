@@ -1,6 +1,6 @@
 import { useRecoilValue, useSetRecoilState, RecoilState } from 'recoil'
 import { SetData } from '../types'
-import _ from 'lodash'
+import { set } from 'lodash-es'
 import produce, { Draft } from 'immer'
 import { useCallback } from 'react'
 
@@ -37,22 +37,22 @@ export const useSetFromState = <D extends object>(state: RecoilState<D>) => {
 export const useSetFromStatePath = <D extends object>(state: RecoilState<D>) => {
   const setValue = useSetRecoilState(state)
 
-  const set: SetData<D> = useCallback(<K extends keyof Draft<D>>(data: any, value?: Draft<D>[K]) => {
+  const handleSet: SetData<D> = useCallback(<K extends keyof Draft<D>>(data: any, value?: Draft<D>[K]) => {
     if (typeof data === 'string') {
       setValue(produce((draft: Draft<D>) => {
-        _.set(draft, data, value)
+        set(draft, data, value)
       }))
     } else if (typeof data === 'object') {
       setValue(produce((draft: Draft<D>) => {
         for (const key of Object.keys(data)) {
-          _.set(draft, key, data[key])
+          set(draft, key, data[key])
         }
       }))
     } else if (typeof data === 'function') {
       setValue(produce(data as (draft: Draft<D>) => void))
     }
   }, [])
-  return set
+  return handleSet
 }
 
 /**
