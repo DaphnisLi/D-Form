@@ -12,5 +12,6 @@
     "singleline",
     "Cascader",
     "immer",
+    "Formily",
   ],
 }
