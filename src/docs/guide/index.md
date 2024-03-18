@@ -28,12 +28,12 @@ order: 1
 ## 我的愿景
 希望创造一个足够 __轻__ 的表单, 将具有以下特点
 
-- 学习成本低: 只提供必要的 API, API 使用符合直觉, [API概览](/guide/api/api#api-概览)
-- 能够覆盖任何表单场景: 最复杂的场景无疑是表单嵌套, 甚至是嵌套子表单复用, [demo](/guide/advanced/nesting-form#进阶-嵌套表单)
-- 使用简单, 几乎没有坑点: 严格遵守 React 数据流, 力求数据清晰, 目前已知坑点为 [path 模式](https://www.lodashjs.com/docs/lodash.get)
-- 性能及格: 使用 Recoil + immer
-- 布局简单, 尽量不需要写样式: 样式及控件全部来自 antd, 布局依靠 antd Form
-- 灵活接入任何组件库: monorepo 架构, 见表单设计第7点
+- __学习成本低__: 只提供必要的 API, API 使用符合直觉, [API概览](/guide/api/api#api-概览)
+- __能够覆盖任何表单场景__: 最复杂的场景无疑是表单嵌套, 甚至是嵌套子表单复用, [demo](/guide/advanced/nesting-form#进阶-嵌套表单)
+- __使用简单, 几乎没有坑点__: 严格遵守 React 数据流, 力求数据清晰, 目前已知坑点为 [path 模式](https://www.lodashjs.com/docs/lodash.get)
+- __性能及格__: 使用 Recoil + immer
+- __布局简单, 尽量不需要写样式__: 样式及控件全部来自 antd, 布局依靠 antd Form
+- __灵活接入任何组件库__: monorepo 架构, 见表单设计第7点
 
 ## 表单设计
 
