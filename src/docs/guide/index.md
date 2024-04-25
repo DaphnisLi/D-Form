@@ -7,13 +7,6 @@ title: 介绍
 order: 1
 ---
 
-## 主要技术栈
-- React
-- Recoil: 管理数据流
-- immer: 解决 setState 更新问题 (深拷贝消耗性能)
-- Antd (非必需): 提供布局及样式
-- async-validator: 进行表单校验
-
 ## 表单的痛点
 几乎每天都在和表单打交道的我, 遇到过很多坑点, antd 3～5 全用过, formily 也了解过, 我认为开发者在使用上述表单时面临以下痛点
 
@@ -80,6 +73,92 @@ __下面讲讲如何解决__
 7、如何适配不同的组件库
 - 使用 monorepo 对整个表单库进行合理拆分, [拆分如下](/guide#项目结构)
 
+
+## 对比
+
+```tsx
+/**
+ * inline: true
+ */
+import React from 'react'
+import { Table, Tooltip } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
+
+const text = (content, tooltips) => {
+  if (tooltips) {
+    return (
+      <div>
+        {content}
+        <Tooltip title={tooltips}>
+          <QuestionCircleOutlined style={{ marginLeft: 3 }} />
+        </Tooltip>
+      </div>
+    )
+  }
+  return content
+}
+
+const dataSource = [
+  {
+    feature: '自定义组件接入成本',
+    antd: '低',
+    'formily2.x': text('低', '但控件传值方式不够优雅'),
+    'dForm': text('低', '不仅支持组件，还支持直接函数渲染')
+  },
+  {
+    feature: '性能',
+    antd: text('高', '解决了值同步精确渲染'),
+    'formily2.x': text('高', '解决了值同步精确渲染'),
+    'dForm': text('中', '实现了组件级别的渲染')
+  },
+  {
+    feature: '是否支持动态渲染',
+    antd: text('是', '但其赋值操作受 dom 限制是否存在，不够灵活'),
+    'formily2.x': '是',
+    'dForm': '是',
+  },
+  {
+    feature: '是否开箱即用',
+    antd: '是',
+    'formily2.x': '是',
+    'dForm': '是',
+  },
+  {
+    feature: '开发效率',
+    antd: text('中', '不够灵活，Form.List 有些抽象'),
+    'formily2.x': text('高', '灵活且贴近原生'),
+    'dForm': text('高', '灵活且贴近原生'),
+  },
+  {
+    feature: '学习成本',
+    antd: '中',
+    'formily2.x': text('高', 'API 太多了，很多都用不到，且定义了很多参数，不够直观'),
+    'dForm': text('低', '只提供必要 API，且使用方式完全仿照 Hook'),
+  },
+  {
+    feature: '场景化封装能力',
+    antd: '有',
+    'formily2.x': '有',
+    'dForm': '有',
+  },
+]
+
+export default () => {
+  return (
+    <Table
+      dataSource={dataSource}
+      pagination={false}
+      bordered
+      size="small"
+    >
+      <Table.Column title="能力" dataIndex="feature" width={200} />
+      <Table.Column title="Ant Design Form" dataIndex="antd" width={200} />
+      <Table.Column title="Formily2.x" dataIndex="formily2.x" width={200} />
+      <Table.Column title="D-form" dataIndex="dForm" width={200} />
+    </Table>
+  )
+}
+```
 
 ## 项目结构
 后期会分离出三个 npm 包: d-form-core、d-form-ui、d-form-antd
