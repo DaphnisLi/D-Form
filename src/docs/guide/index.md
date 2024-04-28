@@ -133,7 +133,7 @@ const dataSource = [
     feature: '学习成本',
     antd: '中',
     'formily2.x': text('高', 'API 太多了, 很多都用不到, 且定义了很多参数, 不够直观'),
-    'dForm': text('低', '只提供必要 API, 且使用方式完全仿照 Hook'),
+    'dForm': text('低', 'API 极少, 且使用方式完全仿照 Hook'),
   },
   {
     feature: '场景化封装能力',
