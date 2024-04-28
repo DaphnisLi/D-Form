@@ -80,16 +80,16 @@ __下面讲讲如何解决__
 /**
  * inline: true
  */
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Table, Tooltip } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 
-const text = (content, tooltips) => {
+const text = (content: ReactNode, tooltips: ReactNode, link?: string) => {
   if (tooltips) {
     return (
       <div>
         {content}
-        <Tooltip title={tooltips}>
+        <Tooltip title={<>{tooltips}{link && <>, <a target="_blank" href={link}>案例</a></>}</>}>
           <QuestionCircleOutlined style={{ marginLeft: 3 }} />
         </Tooltip>
       </div>
@@ -101,19 +101,19 @@ const text = (content, tooltips) => {
 const dataSource = [
   {
     feature: '自定义组件接入成本',
-    antd: '低',
-    'formily2.x': text('低', '但控件传值方式不够优雅'),
-    'dForm': text('低', '不仅支持组件，还支持直接函数渲染')
+    antd: text('低', '使用方式符合 React 标准'),
+    'formily2.x': text('低', '但使用方式不够优雅'),
+    'dForm': text('低', '使用方式符合 React 标准, 还支持直接函数渲染', '/guide/advanced/custom-component#渲染函数')
   },
   {
     feature: '性能',
-    antd: text('高', '解决了值同步精确渲染'),
-    'formily2.x': text('高', '解决了值同步精确渲染'),
-    'dForm': text('中', '实现了组件级别的渲染')
+    antd: text('高', '字段级别监听, 组件级别更新'),
+    'formily2.x': text('高'),
+    'dForm': text('中', '组件级别更新')
   },
   {
     feature: '是否支持动态渲染',
-    antd: text('是', '但其赋值操作受 dom 限制是否存在，不够灵活'),
+    antd: text('是', '但其赋值受限于 dom 是否存在, 不够灵活'),
     'formily2.x': '是',
     'dForm': '是',
   },
@@ -125,15 +125,15 @@ const dataSource = [
   },
   {
     feature: '开发效率',
-    antd: text('中', '不够灵活，Form.List 有些抽象'),
-    'formily2.x': text('高', '灵活且贴近原生'),
-    'dForm': text('高', '灵活且贴近原生'),
+    antd: text('中', '不够灵活, Form.List 有些抽象'),
+    'formily2.x': text('中', '提供了更多 API 来适用复杂场景, 但不够灵活', 'https://react.formilyjs.org/zh-CN/api/components/array-field)'),
+    'dForm': text('高', '灵活且贴近 React, 不创造多余理念'),
   },
   {
     feature: '学习成本',
     antd: '中',
-    'formily2.x': text('高', 'API 太多了，很多都用不到，且定义了很多参数，不够直观'),
-    'dForm': text('低', '只提供必要 API，且使用方式完全仿照 Hook'),
+    'formily2.x': text('高', 'API 太多了, 很多都用不到, 且定义了很多参数, 不够直观'),
+    'dForm': text('低', '只提供必要 API, 且使用方式完全仿照 Hook'),
   },
   {
     feature: '场景化封装能力',
