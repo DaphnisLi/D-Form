@@ -89,7 +89,7 @@ const text = (content: ReactNode, tooltips: ReactNode, link?: string) => {
     return (
       <div>
         {content}
-        <Tooltip title={<>{tooltips}{link && <>, <a target="_blank" href={link}>案例</a></>}</>}>
+        <Tooltip title={<>{tooltips}{link && <>, <a target="_blank" href={link}>说明</a></>}</>}>
           <QuestionCircleOutlined style={{ marginLeft: 3 }} />
         </Tooltip>
       </div>
@@ -107,7 +107,7 @@ const dataSource = [
   },
   {
     feature: '性能',
-    antd: text('高', '字段级别监听, 组件级别更新'),
+    antd: text('高', '字段级别监听, 组件级别更新', '/guide/other/antd-form'),
     'formily2.x': text('高'),
     'dForm': text('中', '组件级别更新')
   },
